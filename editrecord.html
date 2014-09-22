@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<script type="text/javascript">
+function editfunc(id)
+{
+  var editid="editid="+id;
+  console.log(editid);
+  //alert(editid);
+  //alert("edit id is " + editid);
+   $.ajax({
+    url:"editpage.php",
+    data: editid,
+	type:"POST",
+	dataType:"json",
+	success:function(datareply)
+	  {
+	    alert(datareply.id);
+		console.log(datareply);
+	   $("#edid").val(datareply.id);
+       $("#edname").val(datareply.ename);
+	  
+	  },
+	  error:function(e)
+	  {
+	    alert("fail");
+		console.log(editid);
+		alert(e.result);
+	  }
+   });
+}
+</script>
+</head>
+<body>
+	<div id="editform">
+	<form method="POST" action="db.php">
+	  <input type="hidden" name="PUT" value="PUT"/>
+	id:<input type="text" id="edid" name="id"/>
+	name:<input type="text" id="edname" name="name"/>
+	<input type="submit" value="update data"/>
+	</form>
+	</div>
+</body>
+</html>

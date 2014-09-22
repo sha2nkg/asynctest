@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Html JSON PHP</title>
+	<script type="text/javascript" src="jquery-1.6.1.min.js"></script> 
+	<script type="text/javascript">
+function editfunc(id)
+{
+  var editid="editid="+id;
+  
+  //alert(editid);
+  //alert("edit id is " + editid);
+   $.ajax({
+    url:"editpage.php",
+    data: editid,
+	type:"POST",
+	dataType:"json",
+	success:function(datareply)
+	  {
+	    //alert(datareply.id);
+		//console.log(datareply);
+	   $("#edid").val(datareply.id);
+       $("#edname").val(datareply.ename);
+	  
+	  },
+	  error:function(e)
+	  {
+	    //alert("fail");
+		//console.log(editid);
+		//alert(e.result);
+	  }
+   });
+}
+</script>
+</head>
+<body>
+<div id="showlist">	
+<ul>
+   <li><a href="#" onclick="showlistdata()">Show the Data List of Name</a></li>
+ </ul>
+ </div>
+  <hr>
+  <div id="newform">
+	<form method="POST" action="db.php">
+	name:<input type="text" name="name"/>
+	<input type="submit" value="new data"/>
+	</form>
+	<hr>
+	</div>
+	<div id="editform">
+	<form method="POST" action="db.php">
+	  <input type="hidden" name="PUT" value="PUT"/>
+	id:<input type="text" id="edid" name="id"/>
+	name:<input type="text" id="edname" name="name"/>
+	<input type="submit" value="update data"/>
+	</form>
+	</div>
+	
+	<script type="text/javascript">
+	
+	          $(document).ready(function(){
+					$.getJSON('allrecord.php', function(data) {
+						  $.each(data, function(key, val) {
+							   $('ul').append('<li id="' + val.id + '"><a href="#editrecord" onclick="editfunc('+val.id+')">' + val.name + '</a></li>');
+						  });
+					});
+
+			 });
+			 
+	</script>
+</body>
+
+</html>
+
+
